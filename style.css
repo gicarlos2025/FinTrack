@@ -1,0 +1,1012 @@
+/* ==========================================================================
+   STYLE SHEET: Financial Dashboard
+   Author: Senior Front-end Developer
+   Description: Premium Dark-mode layout, responsive CSS grid, glassmorphism elements,
+                and micro-animations.
+   ========================================================================== */
+
+/* 1. IMPORTS & VARIABLE DEFINITIONS
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* Color Palette */
+    --bg-main: #131417;
+    --bg-card: #1c1d22;
+    --bg-input: #25272e;
+    --border-color: #2d3039;
+    --accent-color: #b4ff39;
+    --accent-hover: #9ee628;
+    --accent-glow: rgba(180, 255, 57, 0.15);
+    --danger-color: #ff5a79;
+    --danger-hover: #e04664;
+    --danger-glow: rgba(255, 90, 121, 0.15);
+    --info-color: #38bdf8;
+    
+    /* Text Colors */
+    --text-primary: #ffffff;
+    --text-secondary: #909299;
+    --text-muted: #5c5e66;
+    --text-dark: #131417;
+
+    /* Spacing & Borders */
+    --border-radius-sm: 6px;
+    --border-radius-md: 12px;
+    --border-radius-lg: 20px;
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.3);
+    --shadow-accent: 0 0 20px rgba(180, 255, 57, 0.2);
+}
+
+/* 2. BASE & RESET STYLES
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-main);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--bg-input);
+    border-radius: var(--border-radius-sm);
+    border: 2px solid var(--bg-main);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--border-color);
+}
+
+/* 3. LAYOUT STRUCTURE
+   ========================================================================== */
+.app-container {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: 280px;
+    background-color: var(--bg-card);
+    border-right: 1px solid var(--border-color);
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 10;
+}
+
+.brand-section {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.brand-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--accent-color), #55efc4);
+    border-radius: var(--border-radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-dark);
+    font-weight: 700;
+    font-size: 1.25rem;
+    box-shadow: var(--shadow-accent);
+}
+
+.brand-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 1rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: var(--border-radius-md);
+    font-weight: 500;
+    transition: var(--transition-fast);
+    cursor: pointer;
+}
+
+.nav-item:hover, .nav-item.active {
+    color: var(--text-primary);
+    background-color: var(--bg-input);
+}
+
+.nav-item.active {
+    border-left: 3px solid var(--accent-color);
+    border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+    padding-left: calc(1rem - 3px);
+}
+
+.nav-item svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    fill: none;
+}
+
+/* Main Content Area */
+.main-content {
+    flex-grow: 1;
+    margin-left: 280px;
+    padding: 2.5rem;
+    max-width: calc(100% - 280px);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Header & Filter Styling */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.header-title-section h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.header-title-section p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.period-filter-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: var(--bg-card);
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.filter-group label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.filter-input {
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--border-radius-sm);
+    font-family: inherit;
+    font-size: 0.85rem;
+    outline: none;
+    transition: var(--transition-fast);
+}
+
+.filter-input:focus {
+    border-color: var(--accent-color);
+}
+
+/* 4. SUMMARY CARDS
+   ========================================================================== */
+.summary-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    transition: transform var(--transition-normal), border-color var(--transition-normal);
+}
+
+.card:hover {
+    transform: translateY(-4px);
+}
+
+.card.receitas-card:hover {
+    border-color: var(--accent-color);
+}
+
+.card.despesas-card:hover {
+    border-color: var(--danger-color);
+}
+
+.card.saldo-card:hover {
+    border-color: var(--info-color);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.card-title {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.card-icon-wrapper {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.receitas-card .card-icon-wrapper {
+    background-color: var(--accent-glow);
+    color: var(--accent-color);
+}
+
+.despesas-card .card-icon-wrapper {
+    background-color: var(--danger-glow);
+    color: var(--danger-color);
+}
+
+.saldo-card .card-icon-wrapper {
+    background-color: rgba(56, 189, 248, 0.15);
+    color: var(--info-color);
+}
+
+.card-icon-wrapper svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+}
+
+.card-value {
+    font-size: 1.85rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.card-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.trend-badge {
+    padding: 0.2rem 0.5rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.trend-up {
+    background-color: var(--accent-glow);
+    color: var(--accent-color);
+}
+
+.trend-down {
+    background-color: var(--danger-glow);
+    color: var(--danger-color);
+}
+
+.card-footer-text {
+    color: var(--text-muted);
+}
+
+/* 5. CHARTS GRID
+   ========================================================================== */
+.charts-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+}
+
+.chart-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.chart-card-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.chart-wrapper {
+    width: 100%;
+    height: 300px;
+    position: relative;
+}
+
+/* 6. TRANSACTIONS & CATEGORY MANAGEMENT
+   ========================================================================== */
+.forms-table-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1.5rem;
+}
+
+.forms-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.form-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.form-group-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.form-group label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.form-control {
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius-md);
+    font-family: inherit;
+    font-size: 0.9rem;
+    outline: none;
+    transition: var(--transition-fast);
+}
+
+.form-control:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 10px rgba(180, 255, 57, 0.1);
+}
+
+/* Select arrows customization */
+select.form-control {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23909299'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 16px;
+    padding-right: 2.5rem;
+}
+
+/* Buttons style */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--border-radius-md);
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    width: 100%;
+}
+
+.btn-primary {
+    background-color: var(--accent-color);
+    color: var(--text-dark);
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-hover);
+    box-shadow: var(--shadow-accent);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+    background-color: var(--bg-input);
+    border-color: var(--text-secondary);
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    color: var(--text-primary);
+}
+
+.btn-danger:hover {
+    background-color: var(--danger-hover);
+    box-shadow: var(--shadow-danger);
+}
+
+/* Horizontal alignment for dynamic categories form */
+.form-inline {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.form-inline .form-control {
+    flex-grow: 1;
+}
+
+.form-inline .btn {
+    width: auto;
+    padding: 0.75rem 1rem;
+}
+
+/* 7. TRANSACTIONS TABLE
+   ========================================================================== */
+.table-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.table-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.transactions-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.transactions-table th {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.transactions-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.9rem;
+    vertical-align: middle;
+}
+
+.transactions-table tbody tr {
+    transition: var(--transition-fast);
+}
+
+.transactions-table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* Transaction Type Badges */
+.badge-type {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-type.receita {
+    background-color: var(--accent-glow);
+    color: var(--accent-color);
+}
+
+.badge-type.despesa {
+    background-color: var(--danger-glow);
+    color: var(--danger-color);
+}
+
+.badge-category {
+    background-color: var(--bg-input);
+    color: var(--text-secondary);
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--border-radius-sm);
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.badge-value {
+    font-weight: 600;
+}
+
+.badge-value.receita {
+    color: var(--accent-color);
+}
+
+.badge-value.despesa {
+    color: var(--danger-color);
+}
+
+/* Delete Row Button */
+.btn-delete-row {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: var(--border-radius-sm);
+    transition: var(--transition-fast);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-delete-row:hover {
+    color: var(--danger-color);
+    background-color: var(--danger-glow);
+}
+
+.btn-delete-row svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+}
+
+/* Empty State Styling */
+.empty-state {
+    padding: 3rem 1rem;
+    text-align: center;
+    color: var(--text-secondary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.empty-state svg {
+    width: 48px;
+    height: 48px;
+    stroke: var(--text-muted);
+    fill: none;
+    stroke-width: 1.5;
+}
+
+.empty-state p {
+    font-size: 0.95rem;
+}
+
+/* 8. FOOTER / UTILITIES
+   ========================================================================== */
+.footer-utilities {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.footer-text {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.footer-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.footer-actions .btn {
+    width: auto;
+}
+
+#import-file-input {
+    display: none;
+}
+
+/* 9. MOBILE-FIRST RESPONSIVE BREAKPOINTS (@media)
+   ========================================================================== */
+
+/* Up to 1023px: Sidebar collapses to navigation bar or slides out */
+@media (max-width: 1023px) {
+    .app-container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        padding: 1.25rem 1.5rem;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .brand-section {
+        gap: 0.5rem;
+    }
+    
+    .brand-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+    }
+    
+    .brand-name {
+        font-size: 1rem;
+    }
+    
+    .sidebar-nav {
+        flex-direction: row;
+        gap: 0.25rem;
+    }
+    
+    .nav-item {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.85rem;
+    }
+    
+    .nav-item.active {
+        border-left: none;
+        border-bottom: 3px solid var(--accent-color);
+        border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
+        padding-left: 0.75rem;
+        padding-bottom: calc(0.5rem - 3px);
+    }
+    
+    .main-content {
+        margin-left: 0;
+        max-width: 100%;
+        padding: 1.5rem;
+        gap: 1.5rem;
+    }
+}
+
+/* Mobile & Tablet grids stacking */
+@media (max-width: 768px) {
+    .main-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .period-filter-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+    
+    .filter-group {
+        justify-content: space-between;
+    }
+    
+    .summary-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .charts-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .forms-table-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
+/* Extra small devices (phones, starting from 320px) */
+@media (max-width: 480px) {
+    .sidebar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+    
+    .brand-section {
+        justify-content: center;
+    }
+    
+    .sidebar-nav {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .main-header {
+        text-align: center;
+    }
+    
+    .card-value {
+        font-size: 1.5rem;
+    }
+    
+    .form-inline {
+        flex-direction: column;
+    }
+    
+    .form-inline .btn {
+        width: 100%;
+    }
+    
+    .footer-utilities {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+    
+    .footer-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .footer-actions .btn {
+        width: 100%;
+    }
+}
+
+/* 10. TAB NAVIGATION & VIEW TOGGLING
+   ========================================================================== */
+.tab-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+    animation: fadeIn 0.3s ease;
+}
+
+.tab-content.hidden {
+    display: none !important;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 11. CATEGORY REPORT COMPONENT
+   ========================================================================== */
+.category-report-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.category-report-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.category-report-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.category-report-name {
+    font-weight: 500;
+}
+
+.category-report-values {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.category-report-percentage {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    background-color: var(--bg-input);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+}
+
+.category-report-amount {
+    font-weight: 600;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 8px;
+    background-color: var(--bg-input);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width var(--transition-normal);
+}
+
+.progress-bar-fill.expense {
+    background: linear-gradient(90deg, var(--danger-color), #ff7675);
+}
+
+.progress-bar-fill.income {
+    background: linear-gradient(90deg, var(--accent-color), #55efc4);
+}
+
+/* 12. REPORT FILTER GRID RESPONSIVENESS
+   ========================================================================== */
+.report-filters-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .report-filters-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 13. PRINT MEDIA STYLING
+   ========================================================================== */
+@media print {
+    body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+    }
+    
+    .sidebar,
+    .main-header,
+    .forms-column,
+    .footer-utilities,
+    .trend-badge,
+    .btn-delete-row,
+    .btn,
+    .report-filters-container,
+    .card-icon-wrapper {
+        display: none !important;
+    }
+    
+    .main-content {
+        margin: 0 !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+    }
+    
+    .tab-content {
+        display: block !important;
+    }
+    
+    .tab-content.hidden {
+        display: none !important;
+    }
+    
+    .table-card, .form-card, .card {
+        background-color: #ffffff !important;
+        border: 1px solid #cccccc !important;
+        color: #000000 !important;
+        box-shadow: none !important;
+        margin-bottom: 20px !important;
+        page-break-inside: avoid;
+    }
+    
+    .transactions-table th, 
+    .transactions-table td {
+        border-bottom: 1px solid #cccccc !important;
+        color: #000000 !important;
+    }
+    
+    .badge-category, .badge-type {
+        background-color: #f1f2f6 !important;
+        color: #000000 !important;
+        border: 1px solid #cccccc !important;
+    }
+}
+
